@@ -236,9 +236,9 @@ if not args.test and not args.interact:
         print('  Continuing training from previous checkpoint')
         with open(args.model_file, 'rb') as f:
             if args.cuda:
-                model = torch.load(f).to(device)
+                model = torch.load(f, weights_only=False).to(device)
             else:
-                model = torch.load(f, map_location='cpu')
+                model = torch.load(f, weights_only=False, map_location='cpu')
     else:
         ntokens = len(corpus.dictionary)
         model = model.RNNModel(args.model, ntokens, args.emsize, args.nhid,
@@ -605,9 +605,9 @@ else:
     # Load the best saved model.
     with open(args.model_file, 'rb') as f:
         if args.cuda:
-            model = torch.load(f).to(device)
+            model = torch.load(f, weights_only=False).to(device)
         else:
-            model = torch.load(f, map_location='cpu')
+            model = torch.load(f, weights_only=False, map_location='cpu')
 
         if args.init is not None:
             if args.init != -1:
